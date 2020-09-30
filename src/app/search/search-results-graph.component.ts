@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewChecked, Input, ElementRef, ViewChild } fro
 import { fromEvent, Unsubscribable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { AnnotationsGraphic } from '../../js/annotations';
+import { DfamAnnotationsGraphic } from 'dfam-soda';
 
 @Component({
   selector: 'dfam-search-results-graph',
@@ -51,7 +51,7 @@ export class SearchResultsGraphComponent implements OnInit, AfterViewChecked {
     const el = this.graph.nativeElement;
     el.innerHTML = '';
     if (this.data) {
-      this.graphic = new AnnotationsGraphic({ target: el, data: this.data }).render();
+      this.graphic = new DfamAnnotationsGraphic({ target: el, data: this.data });
     }
   }
 
