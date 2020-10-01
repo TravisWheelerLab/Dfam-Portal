@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewChecked, Input, ElementRef, ViewChild } fro
 import { fromEvent, Unsubscribable } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { DfamAnnotationsGraphic } from 'dfam-soda';
+import { DfamAnnotationsGraphic, DfamAnnotationGraphicConfig } from '@traviswheelerlab/dfam-soda';
 
 @Component({
   selector: 'dfam-search-results-graph',
@@ -51,7 +51,15 @@ export class SearchResultsGraphComponent implements OnInit, AfterViewChecked {
     const el = this.graph.nativeElement;
     el.innerHTML = '';
     if (this.data) {
-      this.graphic = new DfamAnnotationsGraphic({ target: el, data: this.data });
+      const graphicConf: DfamAnnotationGraphicConfig = {
+        target: el,
+        data: this.data,
+        scaleExtent: [1, Infinity],
+        translateExtent: (chart) => [[0, 0], [chart.width, chart.height]],
+      };
+      this.graphic = new DfamAnnotationsGraphic(graphicConf);
+      // if you want to avoid creating a new object, you can call
+      // this.graphic.render(this.data)
     }
   }
 
