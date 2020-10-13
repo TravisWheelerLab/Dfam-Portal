@@ -48,9 +48,11 @@ export class SearchResultsGraphComponent implements OnInit, AfterViewChecked {
   }
 
   redraw() {
-    const el = this.graph.nativeElement;
-    el.innerHTML = '';
-    if (this.data) {
+    if (!this.graphic) {
+      // create the chart from scratch only the first time
+      const el = this.graph.nativeElement;
+      el.innerHTML = '';
+
       const graphicConf: DfamAnnotationGraphicConfig = {
         target: el,
         data: this.data,
@@ -58,9 +60,9 @@ export class SearchResultsGraphComponent implements OnInit, AfterViewChecked {
         translateExtent: (chart) => [[0, 0], [chart.width, chart.height]],
       };
       this.graphic = new DfamAnnotationsGraphic(graphicConf);
-      // if you want to avoid creating a new object, you can call
-      // this.graphic.render(this.data)
     }
+
+    this.graphic.render(this.data);
   }
 
 }
